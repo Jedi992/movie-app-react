@@ -18,6 +18,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
           'Content-Type': 'application/json',
       },
     })
+    console.log(res.data)
     setMovieList(res.data.items)
     setPagination(res.data.totalPages)
     scrollTo(0, 0);

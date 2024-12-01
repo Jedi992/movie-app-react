@@ -1,11 +1,14 @@
 import React from 'react'
 
 export function Card({movieList}) {
+  const validTypes = ["TV_SERIES", "FILM", "TV_SHOW", "MINI_SERIES"]
+   
   return (
   <>
     {
-    movieList.map(movie =>(movie.nameRu &&
-        <section key={movie.kinopoiskId || movie.filmId} className="movie__list-card">
+    movieList.map(movie => {
+      if(validTypes.includes(movie.type) && movie.nameRu) {
+       return <section key={movie.kinopoiskId || movie.filmId} className="movie__list-card">
         <div className="movie__card-image">
           <img width="350" src={movie.posterUrlPreview} alt="#" />
         </div>
@@ -17,7 +20,7 @@ export function Card({movieList}) {
           <button className="movie__card-button">Добавить в желаемое</button>
         </div>
       </section>
-      ))} 
+      }})} 
 
       
   </>
