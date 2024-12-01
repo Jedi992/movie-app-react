@@ -127,24 +127,6 @@
     overflow: hidden;
   }
   
-  .movie__pagination-list {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    gap: 30px;
-  }
-  .movie__pagination-item {
-    color: #ffff;
-    border: 1px solid;
-    padding: 16px;
-    border-radius: 15px;
-    cursor: pointer;
-  }
-  
-  .movie__pagination-item.active {
-    background-color: #003cc5;
-  }
   
   .movie__card-button {
     border-radius: 10px;

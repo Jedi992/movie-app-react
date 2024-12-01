@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import './Movie.scss'
 import axios from 'axios'
+import { Card } from "../Card/Card"
+import { Pagination } from '../Pagination/Pagination'
 
 export function Movie() {
-  const [movieList, setMovieList] = useState('') 
-
-  useEffect(() => {
-    axios.get(`https://kinopoiskapiunofficial.tech/api/v2.2/films`, {
+const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
+const API_URL_MOVIE_DETAILS = `https://kinopoiskapiunofficial.tech/api/v2.2/films`
+const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
+  const [movieList, setMovieList] = useState([]) 
+  const [pagination, setPagination] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const fetchLoader = async () => {
+    const res = await axios.get(API_URL_MOVIE_PAGE + currentPage, {
       headers: {
           'X-API-KEY': '229eed78-a9a7-44b0-ae3b-73d7798e927c',
           'Content-Type': 'application/json',
       },
-    }).then(res => setMovieList(res.data)).catch(err => console.log(err))
-  },[setMovieList] )
-  
-console.log(movieList)
-
+    })
+    setMovieList(res.data.items)
+    setPagination(res.data.totalPages)
+    scrollTo(0, 0);
+  }
+   useEffect(() => {
+    fetchLoader()
+      
+  },[setMovieList,currentPage] )
   return (
     <main>
       <div className="container">
@@ -27,9 +37,7 @@ console.log(movieList)
               </div>
             </div>
             <div className="movie__list-grid">
-              {/* {movieList.items.map(mov => <ul>
-                <li>{mov}</li>
-              </ul>)} */}
+              <Card movieList={movieList}/>
               </div>
           </article>
           <div className="modal">
@@ -50,10 +58,7 @@ console.log(movieList)
             </div>
           </div>
         </div>
-        <div className="movie__pagination">
-          <ul className="movie__pagination-list">
-          </ul>
-        </div>
+        <Pagination pagination={pagination} setCurrentPage={setCurrentPage} currentPage={currentPage} />
       </div>
   </main>
   )
