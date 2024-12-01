@@ -1,0 +1,20 @@
+.movie__pagination-list {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 30px;
+  }
+  .movie__pagination-list { 
+    li {
+    padding: 15px;
+    color: #ffff;
+    border: 1px solid;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+}
+  .active {
+    background-color: #003cc5;
+  }
+  
