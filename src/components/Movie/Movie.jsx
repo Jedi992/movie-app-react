@@ -11,6 +11,8 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
   const [movieList, setMovieList] = useState([]) 
   const [pagination, setPagination] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
+  const [pageUrl, SetPageUrl] = useState(0)
+  console.log(pageUrl)
   const fetchLoader = async () => {
     const res = await axios.get(API_URL_MOVIE_PAGE + currentPage, {
       headers: {
@@ -38,7 +40,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
               </div>
             </div>
             <div className="movie__list-grid">
-              <Card movieList={movieList}/>
+              <Card SetPageUrl={SetPageUrl}  movieList={movieList}/>
               </div>
           </article>
           <div className="modal">
@@ -47,7 +49,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
             <div className="popup__body">
               <div className="popup__content">
                 <a href="#" className="popup__close"></a>
-                <h2 className="popup__title">Желаeмое</h2>
+                <h2 className="popup__title">Избранное</h2>
                 <div className="popup__text">
                   <div className="popup__text-block">
                   <span className="popup__text-span">Список пуст!</span>
