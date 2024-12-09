@@ -1,3 +1,15 @@
-.moviecard__title {
+.moviecard__description {
     color: #fff;    
+}
+
+.movie__block {
+    display: flex;
+}
+.movie__img-block {
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.movie__title {
+    color: #fff;
 }

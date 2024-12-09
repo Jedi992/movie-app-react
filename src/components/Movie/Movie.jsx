@@ -39,7 +39,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
         <div className="main__wrapper">
           <article className="movie__list">
             <div className="movie__list-menu">
-              <h2 className="movie__list-title">Список фильмов</h2>
+              <h2 className="movie__list-title">Каталог</h2>
               <div className="container">
               </div>
             </div>
