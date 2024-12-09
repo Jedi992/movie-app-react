@@ -3,21 +3,19 @@ import './Movie.scss'
 import axios from 'axios'
 import { Card } from "../Card/Card"
 import { Pagination } from '../Pagination/Pagination'
-import { useParams, useSearchParams } from "react-router"
+import { useSearchParams } from "react-router"
 
 export function Movie() {
-  const {paginationId} = useParams()
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
-  console.log(page)
 const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
-const API_URL_MOVIE_DETAILS = `https://kinopoiskapiunofficial.tech/api/v2.2/films`
+
 const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
   const [movieList, setMovieList] = useState([]) 
   const [pagination, setPagination] = useState(0)
   const [currentPage, setCurrentPage] = useState(page || 1)
-  const [pageUrl, SetPageUrl] = useState(0)
-  // console.log(pageUrl)
+  const [pageMovie, SetPageMovie] = useState(0)
+  
   const fetchLoader = async () => {
     const res = await axios.get(API_URL_MOVIE_PAGE + currentPage   , {
       headers: {
@@ -25,7 +23,6 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
           'Content-Type': 'application/json',
       },
     })
-    // console.log(res.data)
     setMovieList(res.data.items)
     setPagination(res.data.totalPages)
     scrollTo(0, 0);
@@ -34,6 +31,8 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
     fetchLoader()
       
   },[setMovieList,currentPage] )
+
+  console.log(pageMovie)
   return (
     <main>
       <div className="container">
@@ -45,7 +44,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
               </div>
             </div>
             <div className="movie__list-grid">
-              <Card SetPageUrl={SetPageUrl}  movieList={movieList}/>
+              <Card SetPageMovie={SetPageMovie}  movieList={movieList}/>
               </div>
           </article>
           <div className="modal">
@@ -66,7 +65,10 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
             </div>
           </div>
         </div>
-        <Pagination  pagination={pagination} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+        <Pagination
+          pagination={pagination}
+           setCurrentPage={setCurrentPage}
+            currentPage={currentPage} />
       </div>
   </main>
   )

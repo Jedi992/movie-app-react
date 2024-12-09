@@ -4,8 +4,8 @@ import { Route, Routes, useSearchParams } from 'react-router'
 import {About} from './components/About/About'
 import './App.scss'
 import { Dashboard } from './components/Dashboard/Dashboard'
-import { Card } from './components/Card/Card'
 import { NotFound } from './components/NotFound/NotFound'
+import {PageMovie} from './components/Page/PageMovie'
 
 export function App() {
   
@@ -16,7 +16,7 @@ export function App() {
       <Route path="/about" element={<About />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="/movie" element={<Movie />} />
-      <Route path="/movie/:paginationId/details/:id" element={<Card />} />
+      <Route path="/movie/details/:movieId" element={<PageMovie />} />
       <Route path='*' element={<NotFound/>} />
     </Routes>
     
