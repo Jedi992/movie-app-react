@@ -3,24 +3,29 @@ import './Movie.scss'
 import axios from 'axios'
 import { Card } from "../Card/Card"
 import { Pagination } from '../Pagination/Pagination'
+import { useParams, useSearchParams } from "react-router"
 
 export function Movie() {
+  const {paginationId} = useParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("page");
+  console.log(page)
 const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
 const API_URL_MOVIE_DETAILS = `https://kinopoiskapiunofficial.tech/api/v2.2/films`
 const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
   const [movieList, setMovieList] = useState([]) 
   const [pagination, setPagination] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(page || 1)
   const [pageUrl, SetPageUrl] = useState(0)
-  console.log(pageUrl)
+  // console.log(pageUrl)
   const fetchLoader = async () => {
-    const res = await axios.get(API_URL_MOVIE_PAGE + currentPage, {
+    const res = await axios.get(API_URL_MOVIE_PAGE + currentPage   , {
       headers: {
           'X-API-KEY': '229eed78-a9a7-44b0-ae3b-73d7798e927c',
           'Content-Type': 'application/json',
       },
     })
-    console.log(res.data)
+    // console.log(res.data)
     setMovieList(res.data.items)
     setPagination(res.data.totalPages)
     scrollTo(0, 0);
@@ -61,7 +66,7 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
             </div>
           </div>
         </div>
-        <Pagination pagination={pagination} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+        <Pagination  pagination={pagination} setCurrentPage={setCurrentPage} currentPage={currentPage} />
       </div>
   </main>
   )

@@ -9,7 +9,7 @@ export function Header() {
       <div className="container">
         <div className="header__wrapper">
           <h1 className="header__title">
-            <a className="header__title-link" href="/">Movie App</a>
+           <NavLink className="header__title-link" to="/movie">Movie App</NavLink> 
           </h1>
           <form className="header__search-form" onClick={() => preventDefault()}>
             <input className="header__search-input"  type="text" placeholder="Поиск..." />
