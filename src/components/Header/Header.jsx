@@ -1,26 +1,24 @@
 
 import './Header.scss'
 import { NavLink } from "react-router";
-
-export function Header() {
+import {Search} from "../Search/Search"
+export function Header({API_KEY, setMovieSearch, setMovieSearchText}) {
   
   return (
        <header>
       <div className="container">
         <div className="header__wrapper">
-          <h1 className="header__title">
+          <h1 onClick={() => setMovieSearch([])} className="header__title">
            <NavLink className="header__title-link" to="/movie">Movie App</NavLink> 
           </h1>
-          <form className="header__search-form" onClick={() => preventDefault()}>
-            <input className="header__search-input"  type="text" placeholder="Поиск..." />
-          </form>
+          <Search setMovieSearchText={setMovieSearchText} setMovieSearch={setMovieSearch} API_KEY={API_KEY}/>
           <nav className="header__nav">
             <ul className="header__menu">
               <li className="header__menu-item">
               <NavLink to="/"><button className="header__menu-link" href="#">Главная</button></NavLink>
               </li>
               <li className="header__menu-item">
-               <button className="header__menu-link popup-btn">Избранное</button> 
+               <NavLink to={'/movie/favorite'}><button className="header__menu-link popup-btn">Избранное</button></NavLink>
               </li>
               <li className="header__menu-item">
               <NavLink to="/about"><button className="header__menu-link">О нас</button></NavLink>

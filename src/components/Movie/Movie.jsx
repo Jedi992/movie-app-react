@@ -5,21 +5,18 @@ import { Card } from "../Card/Card"
 import { Pagination } from '../Pagination/Pagination'
 import { useSearchParams } from "react-router"
 
-export function Movie() {
+export function Movie({API_KEY,movieSearch}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
 const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
-
-const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
   const [movieList, setMovieList] = useState([]) 
   const [pagination, setPagination] = useState(0)
   const [currentPage, setCurrentPage] = useState(page || 1)
-  const [pageMovie, SetPageMovie] = useState(0)
   
   const fetchLoader = async () => {
     const res = await axios.get(API_URL_MOVIE_PAGE + currentPage   , {
       headers: {
-          'X-API-KEY': '229eed78-a9a7-44b0-ae3b-73d7798e927c',
+          'X-API-KEY': `${API_KEY}`,
           'Content-Type': 'application/json',
       },
     })
@@ -28,11 +25,9 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
     scrollTo(0, 0);
   }
    useEffect(() => {
-    fetchLoader()
       
-  },[setMovieList,currentPage] )
-
-  console.log(pageMovie)
+      fetchLoader(); 
+  },[movieSearch,currentPage] )
   return (
     <main>
       <div className="container">
@@ -44,7 +39,10 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
               </div>
             </div>
             <div className="movie__list-grid">
-              <Card SetPageMovie={SetPageMovie}  movieList={movieList}/>
+              <Card
+                  movieSearch={movieSearch}
+                  movieList={movieList}
+                      />
               </div>
           </article>
           <div className="modal">
@@ -65,10 +63,11 @@ const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films
             </div>
           </div>
         </div>
-        <Pagination
+      <Pagination
           pagination={pagination}
            setCurrentPage={setCurrentPage}
-            currentPage={currentPage} />
+            currentPage={currentPage} />  
+        
       </div>
   </main>
   )

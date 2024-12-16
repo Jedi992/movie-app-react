@@ -4,7 +4,6 @@ import { Link,useSearchParams } from "react-router"
 
 export function Pagination({ pagination, setCurrentPage,currentPage }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get("page")
 
     let paginationArr = []
     for (let i = 1; i <= pagination; i++) {
