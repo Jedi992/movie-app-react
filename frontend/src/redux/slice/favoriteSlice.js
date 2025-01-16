@@ -4,8 +4,8 @@ const initialState = {
   items: []
 } 
 
-export const cartSlice = createSlice({
-  name: 'counter',
+export const favoriteSlice = createSlice({
+  name: 'favorite',
   initialState,
   reducers: {
     addItem: (state, action) => {
@@ -20,6 +20,6 @@ export const cartSlice = createSlice({
   },
 })
 
-export const { addItem, removeItems } = cartSlice.actions
+export const { addItem, removeItems } = favoriteSlice.actions
 
-export default cartSlice.reducer
+export default favoriteSlice.reducer

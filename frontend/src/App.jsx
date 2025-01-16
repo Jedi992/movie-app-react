@@ -1,6 +1,6 @@
 import { Header } from './components/Header/Header'
 import { Movie } from './components/Movie/Movie'
-import { useState,createContext } from 'react'
+import { useState } from 'react'
 import { Route, Routes } from 'react-router'
 import {About} from './components/About/About'
 import './App.scss'
@@ -10,20 +10,20 @@ import {PageMovie} from './components/Page/PageMovie'
 import { SearchPage } from './components/SearchPage/SearchPage'
 import { FavoritePage } from './components/FavoritePage/FavoritePage'
 
-export const favoriteContext = createContext()
 
 export function App() {
-    const [API_KEY , SetAPI_KEY] = useState('')
+    const [API_KEY , SetAPI_KEY] = useState('229eed78-a9a7-44b0-ae3b-73d7798e927c')
     const [movieSearchText, setMovieSearchText] = useState('')
     const [movieSearch, setMovieSearch] = useState([])
-    const [favoriteList, setFavoriteList] = useState([])
+  
     
     
   return (
-    <favoriteContext.Provider value={{setFavoriteList,favoriteList }}>
+    <>
     <Header setMovieSearchText={setMovieSearchText} API_KEY={API_KEY} setMovieSearch={setMovieSearch} />
     <Routes>
-      <Route path="/about" element={<About />} />
+    
+    <Route path="/about" element={<About />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="/movie" element={<Movie
            movieSearch={movieSearch}
@@ -38,13 +38,12 @@ export function App() {
        movieSearch={movieSearch}
        />}/>
       <Route path="/movie/favorite"
-       element={<FavoritePage
-        favoriteList={favoriteList}
-      />}/>
+       element={<FavoritePage/>}/>
       <Route path='*'
        element={<NotFound/>} />
     </Routes>
-    </favoriteContext.Provider>
+    </>
+      
   )
 }
 

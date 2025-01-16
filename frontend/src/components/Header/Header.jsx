@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 export function Header({API_KEY, setMovieSearch, setMovieSearchText}) {
+  const dispatch = useDispatch()
   return (
        <header>
       <div className="container">

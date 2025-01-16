@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import "./Pagination.scss"
 import { Link,useSearchParams } from "react-router"
+import { useSelector } from 'react-redux';
 
-export function Pagination({ pagination, setCurrentPage,currentPage }) {
+export function Pagination({ setCurrentPage,currentPage }) {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const pagination = useSelector(state => state.film.items.totalPages)
     let paginationArr = []
     for (let i = 1; i <= pagination; i++) {
         paginationArr.push(i)

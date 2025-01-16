@@ -1,25 +1,26 @@
 import React, {useContext}  from 'react'
-import { favoriteContext } from '../../App'
 import { Link } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { addItem } from '../../redux/slice/cartSlice'
+import { addItem } from '../../redux/slice/favoriteSlice'
 
-export function Card({movieList, movieSearch}) {
+export function Card({movies}) {
   const validTypes = ["TV_SERIES", "FILM", "TV_SHOW", "MINI_SERIES"]
-  const favoriteList = useSelector(list => list.counter.items )
+  const movieList = useSelector((state) => state.film.items.items)
+  const searchItems = useSelector((state) => state.search.items)
   const dispatch = useDispatch()
-  console.log(favoriteList)
 
   const handleClickAddFavorites = (info ) => {
     dispatch(addItem(info))
     }
-
     
 
   return (
   <>
+
     {
-   ( movieList || movieSearch).map(movie => {
+      
+       
+   movieList.map(movie => {
       if(validTypes.includes(movie.type) && movie.nameRu) {
        return <section key={movie.kinopoiskId || movie.filmId} className="movie__list-card" >
        <Link key={movie.kinopoiskId} to={`/movie/details/${movie.kinopoiskId || movie.filmId}`}> <div className="movie__card-image">
@@ -33,7 +34,9 @@ export function Card({movieList, movieSearch}) {
           <button className="movie__card-button" onClick={() => handleClickAddFavorites(movie)} >Добавить в Избранное</button> 
         </div>
       </section>
-      }})} 
+      }}) 
+   
+      }
 
       
   </>

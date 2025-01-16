@@ -3,11 +3,16 @@ import { Link, useSearchParams, useNavigate} from 'react-router'
 import axios from 'axios'
 import "./Search.scss"
 import { SearchPage } from '../SearchPage/SearchPage'
+import { useDispatch, useSelector } from 'react-redux'
+import { searchKeyWord,searchItem } from '../../redux/slice/searchSlice'
 
 export function Search({API_KEY, setMovieSearch, setMovieSearchText}) {
+const dispatch = useDispatch()
+const searchItemKeyword = useSelector(state => state.search.searchKeyword)
 const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
-const [searchKeyWords , setSearchKeyWords] = useState('')
+// const [searchKeyWords , setSearchKeyWords] = useState('')
 const [searchParams, setSearchParams] = useSearchParams('')
+
 let navigate = useNavigate();
 const searchQuery = searchParams.get('search')
     const searchLoader = async (keyword) => {
@@ -18,7 +23,7 @@ const searchQuery = searchParams.get('search')
               'Content-Type': 'application/json',
           },
         })
-        setMovieSearch(res.data.films)
+        dispatch(searchItem(res.data.films))
         
     }
       useEffect(() => {
@@ -32,7 +37,7 @@ const searchQuery = searchParams.get('search')
         const form = e.target;
         const query = form.search.value
         setSearchParams({search: query})
-        setSearchKeyWords(query)
+        dispatch(searchKeyWord(query))
         navigate(`/movie/details/search?search=${query}`)
       }
   return (
@@ -40,7 +45,7 @@ const searchQuery = searchParams.get('search')
    <form autoComplete='off' onSubmit={(e) => handleSubmit(e)} className="header__search-form">
      <input className="header__search-input" defaultValue={searchQuery || ''} name='search'  type="search" placeholder="Поиск..." />
     </form> 
-    
+    <button onClick={() => dispatch(searchKeyWord('ало'))}>s</button>
     </div>
   )
 }

@@ -2,12 +2,13 @@
 // import { favoriteContext } from '../../App'
 import {Link} from "react-router"
 import { useSelector,useDispatch } from 'react-redux'
-import { removeItems } from '../../redux/slice/cartSlice'
+import { removeItems } from '../../redux/slice/favoriteSlice'
 export function FavoritePage() {
   
- const favoriteList = useSelector(list => list.counter)
+ const favoriteList = useSelector(list => list.favorite)
  const dispatch = useDispatch()
     console.log(favoriteList)
+
     
   return (
     <div className='container'>
