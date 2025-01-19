@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { addItem } from '../../redux/slice/favoriteSlice'
 
-export function Card({movies}) {
+export function Card() {
   const validTypes = ["TV_SERIES", "FILM", "TV_SHOW", "MINI_SERIES"]
   const movieList = useSelector((state) => state.film.items.items)
   const searchItems = useSelector((state) => state.search.items)
@@ -20,7 +20,7 @@ export function Card({movies}) {
     {
       
        
-   movieList.map(movie => {
+   (movieList || searchItems).map(movie => {
       if(validTypes.includes(movie.type) && movie.nameRu) {
        return <section key={movie.kinopoiskId || movie.filmId} className="movie__list-card" >
        <Link key={movie.kinopoiskId} to={`/movie/details/${movie.kinopoiskId || movie.filmId}`}> <div className="movie__card-image">

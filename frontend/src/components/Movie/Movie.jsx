@@ -14,18 +14,19 @@ export function Movie({API_KEY,movieSearch}) {
 const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
   const [pagination, setPagination] = useState(0)
   const [currentPage, setCurrentPage] = useState(page || 1)
+  
   const items = useSelector((state) => state.film.items)
   const dispatch = useDispatch()
   
   const fetchLoader = async () => {
     try {
-      const res = await axios.get(API_URL_MOVIE_PAGE + currentPage   , {
+      const res = await axios.get(API_URL_MOVIE_PAGE + currentPage    , {
         headers: {
             'X-API-KEY': `${API_KEY}`,
             'Content-Type': 'application/json',
         },
       })
-      console.log(res.data)
+      setPagination(res.data.totalPages)
       dispatch(setItems(res.data))
       
       scrollTo(0, 0);
@@ -53,7 +54,6 @@ const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?p
               <span className='loading'>Загрузка</span>
               :
               <Card
-              movieSearch={movieSearch}
                   /> }
               
               </div>

@@ -33,7 +33,7 @@ const searchQuery = searchParams.get('search')
       }, [searchQuery,setMovieSearchText])
       const handleSubmit = (e) => {
         
-        e.preventDefault();
+        // e.preventDefault();
         const form = e.target;
         const query = form.search.value
         setSearchParams({search: query})
@@ -45,7 +45,6 @@ const searchQuery = searchParams.get('search')
    <form autoComplete='off' onSubmit={(e) => handleSubmit(e)} className="header__search-form">
      <input className="header__search-input" defaultValue={searchQuery || ''} name='search'  type="search" placeholder="Поиск..." />
     </form> 
-    <button onClick={() => dispatch(searchKeyWord('ало'))}>s</button>
     </div>
   )
 }

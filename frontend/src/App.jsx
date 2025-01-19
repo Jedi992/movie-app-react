@@ -12,7 +12,7 @@ import { FavoritePage } from './components/FavoritePage/FavoritePage'
 
 
 export function App() {
-    const [API_KEY , SetAPI_KEY] = useState('229eed78-a9a7-44b0-ae3b-73d7798e927c')
+    const [API_KEY , SetAPI_KEY] = useState('e5e5b828-9eeb-46de-957b-6540197a5d52')
     const [movieSearchText, setMovieSearchText] = useState('')
     const [movieSearch, setMovieSearch] = useState([])
   
