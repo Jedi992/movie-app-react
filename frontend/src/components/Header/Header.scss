@@ -93,8 +93,8 @@
 
 
 @media (max-width: 883px) {
-  .header__wrapper {
-    display: block;
+  main {
+    margin-top: 334px;
   }
 
   .header__title {
@@ -131,10 +131,16 @@
   .header__menu-link {
     padding: 6px;
     font-size: 12px;
-    display: none;
+    display: block;
   }
   .header__search-input {
     font-size: 14px; 
     padding: 8px; 
   }
+}
+
+@media (max-width: 337px) {
+ main {
+  margin-top: 360px;
+ } 
 }

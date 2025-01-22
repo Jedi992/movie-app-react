@@ -9,7 +9,6 @@ import { searchKeyWord,searchItem } from '../../redux/slice/searchSlice'
 export function Search({API_KEY, setMovieSearch, setMovieSearchText}) {
 const dispatch = useDispatch()
 const searchItemKeyword = useSelector(state => state.search.searchKeyword)
-const API_URL_MOVIE_SEARCH = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=`
 // const [searchKeyWords , setSearchKeyWords] = useState('')
 const [searchParams, setSearchParams] = useSearchParams('')
 
@@ -17,9 +16,9 @@ let navigate = useNavigate();
 const searchQuery = searchParams.get('search')
     const searchLoader = async (keyword) => {
       if (!keyword) return;
-        const res = await axios.get(API_URL_MOVIE_SEARCH + keyword, {
+        const res = await axios.get(`https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=` + keyword, {
           headers: {
-              'X-API-KEY': `${API_KEY}`,
+              'X-API-KEY': `44649c94-1fa7-47c9-9861-8b2e49c71f7a`,
               'Content-Type': 'application/json',
           },
         })

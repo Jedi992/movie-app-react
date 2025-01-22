@@ -5,40 +5,26 @@ import { Card } from "../Card/Card"
 import { Pagination } from '../Pagination/Pagination'
 import { useSearchParams } from "react-router"
 import { useDispatch, useSelector } from 'react-redux'
-import { setItems } from '../../redux/slice/filmSlice'
+import { fetchFilms } from '../../redux/slice/filmSlice'
 
 export function Movie({API_KEY,movieSearch}) {
   
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
-const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?page=`
-  const [pagination, setPagination] = useState(0)
-  const [currentPage, setCurrentPage] = useState(page || 1)
-  
-  const items = useSelector((state) => state.film.items)
+  // const [pagination, setPagination] = useState(0)
+  // const [currentPage, setCurrentPage] = useState(page || 1)
+  const {items,status} = useSelector((state) => state.film)
   const dispatch = useDispatch()
   
   const fetchLoader = async () => {
-    try {
-      const res = await axios.get(API_URL_MOVIE_PAGE + currentPage    , {
-        headers: {
-            'X-API-KEY': `${API_KEY}`,
-            'Content-Type': 'application/json',
-        },
-      })
-      setPagination(res.data.totalPages)
-      dispatch(setItems(res.data))
-      
-      scrollTo(0, 0);
-    } catch {
-      console.log('Ошибка')
-    }
+    dispatch(fetchFilms({
+      API_KEY,
+    }))
     
   }
    useEffect(() => {
-      
       fetchLoader(); 
-  },[movieSearch,currentPage] )
+  },[movieSearch] )
   return (
     <main>
       <div className="container">
@@ -51,7 +37,7 @@ const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?p
             </div>
             <div className="movie__list-grid">
               {Array.isArray(items) ? 
-              <span className='loading'>Загрузка</span>
+              <span className='loading'>{status}</span>
               :
               <Card
                   /> }
@@ -60,9 +46,11 @@ const API_URL_MOVIE_PAGE = `https://kinopoiskapiunofficial.tech/api/v2.2/films?p
           </article>
         </div>
       <Pagination
-          pagination={pagination}
-           setCurrentPage={setCurrentPage}
-            currentPage={currentPage} />  
+      API_KEY={API_KEY}
+          // pagination={pagination}
+          //  setCurrentPage={setCurrentPage}
+            // currentPage={currentPage}
+             />  
       </div>
   </main>
   )

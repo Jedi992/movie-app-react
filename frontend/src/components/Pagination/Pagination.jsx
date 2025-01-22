@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import "./Pagination.scss"
 import { Link,useSearchParams } from "react-router"
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFilms, setCurrentPage } from '../../redux/slice/filmSlice'
 
-export function Pagination({pagination, setCurrentPage,currentPage }) {
+export function Pagination({API_KEY}) {
+  const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams();
-  
+  const {pagination,currentPage} = useSelector(val => val.film)
     let paginationArr = []
     for (let i = 1; i <= pagination; i++) {
         paginationArr.push(i)
@@ -13,15 +15,16 @@ export function Pagination({pagination, setCurrentPage,currentPage }) {
     }
     
     const handleClickPage = (pageid) => {
-      setCurrentPage(pageid)
-      
+      dispatch(setCurrentPage(pageid))
+      dispatch(fetchFilms({pageid}))
+      setSearchParams({page: pageid})
     }
   return (
     <div className="movie__pagination">
           <ul className="movie__pagination-list">
             {paginationArr.map((elem,i) => ( <li key={i} onClick={() => {
             handleClickPage(elem) 
-            setSearchParams({page: (1 && elem )})}
+          }
             }
              className={currentPage === (elem) ? "active" : ""}>
                 {elem}
