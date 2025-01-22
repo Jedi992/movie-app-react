@@ -11,7 +11,7 @@ export function PageMovie({API_KEY}) {
   const movieLoader = async () => {
     const res = await axios.get(API_URL_MOVIE_DETAILS, {
       headers: {
-          'X-API-KEY': `${API_KEY}`,
+          'X-API-KEY': `44649c94-1fa7-47c9-9861-8b2e49c71f7a`,
           'Content-Type': 'application/json',
       },
     })

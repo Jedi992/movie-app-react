@@ -12,7 +12,7 @@ export const fetchFilms = createAsyncThunk(
     const {pageid} = params
     const res = await axios.get(`https://kinopoiskapiunofficial.tech/api/v2.2/films?page=${pageid || 1}`  , {
             headers: {
-                'X-API-KEY': '229eed78-a9a7-44b0-ae3b-73d7798e927c',
+                'X-API-KEY': '44649c94-1fa7-47c9-9861-8b2e49c71f7a',
                 'Content-Type': 'application/json',
             },
           })
