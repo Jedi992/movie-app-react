@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
 import './PageMovie.scss'
-import KinoboxPlayer from '../KinoboxPlayer/KinoboxPlayer'
+import KinoboxPlayer from '../../components/KinoboxPlayer/KinoboxPlayer'
 
 export function PageMovie({API_KEY}) {
   const [movieCard, setMovieCard] = useState({})
@@ -34,9 +34,10 @@ export function PageMovie({API_KEY}) {
             <p className='movie__year'>Год производства: {movieCard.year}</p>
             <p className='movie__genre'>Жанры: {movieCard.genres?.map(elem => elem.genre).join(',')}</p>
             <p className='movie__raiting'>Рейтинг кинопоиска: {movieCard.ratingKinopoisk}</p>
+          <div className='moviecard__description'><h6 className='moviecard__title'>Описание</h6> {movieCard.description}</div>
+
           </div>
         </div>
-          <div className='moviecard__description'>{movieCard.description}</div>
           <div className="movie__player">
         <KinoboxPlayer kpId={movieId} />
       </div>

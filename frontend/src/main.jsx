@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider as AppProvider} from "./components/ui/provider.tsx"
 import { BrowserRouter, Routes, Route } from 'react-router'
 import './index.scss'
 import {App} from './App.jsx'
@@ -10,9 +11,11 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     
     <BrowserRouter >
+    <AppProvider>
     <Provider store={store}>
     <App />
     </Provider>
+    </AppProvider>
     </BrowserRouter>
   </StrictMode>,
 )

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,8 +25,14 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
+html {
 	background-image: url('./assets/zvezdnoe_nebo_zvezdy_chernyj_174007_1920x1080.jpg');
+}
+body {
+	font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  	font-style: normal;
+	
 	line-height: 1;
 }
 ol, ul {
@@ -42,3 +50,4 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+

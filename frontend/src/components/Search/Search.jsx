@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useSearchParams, useNavigate} from 'react-router'
 import axios from 'axios'
 import "./Search.scss"
-import { SearchPage } from '../SearchPage/SearchPage'
+import { SearchPage } from '../../pages/SearchPage/SearchPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchKeyWord,searchItem } from '../../redux/slice/searchSlice'
 

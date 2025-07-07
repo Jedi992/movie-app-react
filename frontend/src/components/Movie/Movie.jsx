@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './Movie.scss'
-import axios from 'axios'
-import { Card } from "../Card/Card"
-import { Pagination } from '../Pagination/Pagination'
-import { useSearchParams } from "react-router"
+import SwiperMovie from "../SwiperMovie/SwiperMovie"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFilms } from '../../redux/slice/filmSlice'
-
+import { fetchShows } from '../../redux/slice/filmSlice'
+import { Spinner } from "@chakra-ui/react"
+import SwiperTvShows from '../SwiperTvShows/SwiperTvShows'
 export function Movie({API_KEY,movieSearch}) {
   
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get("page");
-  // const [pagination, setPagination] = useState(0)
-  // const [currentPage, setCurrentPage] = useState(page || 1)
-  const {items,status} = useSelector((state) => state.film)
+  const itemsMovie = useSelector((state) => state.film.film)
   const dispatch = useDispatch()
-  
+  // console.log(itemsMovie)
   const fetchLoader = async () => {
-    dispatch(fetchFilms({
-      API_KEY,
-    }))
+    // dispatch(fetchShows({
+    //   API_KEY,
+    // }))
     
   }
    useEffect(() => {
@@ -31,26 +25,19 @@ export function Movie({API_KEY,movieSearch}) {
         <div className="main__wrapper">
           <article className="movie__list">
             <div className="movie__list-menu">
-              <h2 className="movie__list-title">Каталог</h2>
               <div className="container">
               </div>
             </div>
             <div className="movie__list-grid">
-              {Array.isArray(items) ? 
-              <span className='loading'>{status}</span>
-              :
-              <Card
-                  /> }
-              
+              <h4 className='movie__list-title'>Популярные фильмы</h4>      
+              <SwiperMovie/>   
+              </div>
+              <div>
+                <h4>Популярные сериалы</h4>
+                <SwiperTvShows />
               </div>
           </article>
         </div>
-      <Pagination
-      API_KEY={API_KEY}
-          // pagination={pagination}
-          //  setCurrentPage={setCurrentPage}
-            // currentPage={currentPage}
-             />  
       </div>
   </main>
   )

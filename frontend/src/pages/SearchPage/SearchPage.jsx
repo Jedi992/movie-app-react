@@ -1,6 +1,5 @@
 import React from 'react'
 import "./SearchPage.scss"
-import {Card } from '../Card/Card'
 
 export function SearchPage({movieSearchText}) {
   return (
