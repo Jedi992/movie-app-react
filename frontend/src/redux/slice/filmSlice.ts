@@ -8,7 +8,7 @@ export const fetchShows = createAsyncThunk(
             method: 'GET',
         headers: {
          accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGU5MjI4M2Q3MTcwNmZmMGVlOWJiYTc3ZmFiNzAxNCIsIm5iZiI6MTczNzM4MzMwMS4wMTQwMDAyLCJzdWIiOiI2NzhlNWQ4NTFjMzQxYzg4OTk2ZGU5MzkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0._utqoxXpygapUoeCSr8GlEdn3OBOA0sYzFQ-DOZQVS4'
+        Authorization: ''
       }
           })
           return res.data
