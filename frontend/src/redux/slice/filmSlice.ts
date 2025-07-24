@@ -3,15 +3,15 @@ import axios from 'axios'
 
 export const fetchShows = createAsyncThunk(
   'films/fetchFilmsStatus',
-  async ({params, typeFilm}: {params: string, typeFilm: string}) => {
-    const res = await axios.get(`https://api.themoviedb.org/3/${typeFilm}/${params}?include_adult=false&include_video=false&language=ru-RU&page=1&sort_by=popularity.desc`  , {
+  async ({params, typeFilm,pageNum}: {params: string, typeFilm: string, pageNum: Number}) => {
+    const res = await axios.get(`https://api.themoviedb.org/3/${typeFilm}/${params}?include_adult=false&include_video=false&language=ru-RU&page=${pageNum}&sort_by=popularity.desc`  , {
             method: 'GET',
         headers: {
          accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGU5MjI4M2Q3MTcwNmZmMGVlOWJiYTc3ZmFiNzAxNCIsIm5iZiI6MTczNzM4MzMwMS4wMTQwMDAyLCJzdWIiOiI2NzhlNWQ4NTFjMzQxYzg4OTk2ZGU5MzkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0._utqoxXpygapUoeCSr8GlEdn3OBOA0sYzFQ-DOZQVS4'
+        Authorization: import.meta.env.VITE_TMDB_KEY
       }
           })
-          return {data:res.data, type: params}
+          return {data:res.data, type: params, page: pageNum}
         
   },
 )
@@ -19,13 +19,17 @@ export const fetchShows = createAsyncThunk(
 interface InitialState {
   film: null;
   tvshows: null;
-  status: "idle" | "Loading" | "success" | "Error",
+  status: "idle" | "loading" | "success" | "Error",
+  statusFilm:"idle" | "loading" | "success" | "Error",
+  statusTvShows: "idle" | "loading" | "success" | "Error",
 }
 
 const initialState: InitialState = {
   film: null,
   tvshows: null,
-  status: 'idle',
+  status: "idle",
+  statusFilm: "idle",
+  statusTvShows: "idle"
 }
 
 export const filmSlice = createSlice({
@@ -41,8 +45,10 @@ export const filmSlice = createSlice({
     const { data, type} = action.payload
     if(type === "movie") {
       state.film = data
+      state.statusFilm = "success"
     } else {
       state.tvshows = data
+      state.statusTvShows = "success"
     } 
     if(state.film && state.tvshows != null) {
       state.status = 'success'

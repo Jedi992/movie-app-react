@@ -7,22 +7,11 @@ import KinoboxPlayer from '../../components/KinoboxPlayer/KinoboxPlayer'
 export function PageMovie({API_KEY}) {
   const [movieCard, setMovieCard] = useState({})
   const {movieId} = useParams()
-  const API_URL_MOVIE_DETAILS = `https://kinopoiskapiunofficial.tech/api/v2.2/films/${movieId}`
-  const movieLoader = async () => {
-    const res = await axios.get(API_URL_MOVIE_DETAILS, {
-      headers: {
-          'X-API-KEY': `44649c94-1fa7-47c9-9861-8b2e49c71f7a`,
-          'Content-Type': 'application/json',
-      },
-    })
-    setMovieCard(res.data)
-  }
+  
   
   useEffect(() => {
     movieLoader()
   }, [movieId])
-
-  
 
   return (
     <div className='container'>

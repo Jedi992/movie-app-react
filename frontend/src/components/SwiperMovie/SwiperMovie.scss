@@ -44,3 +44,26 @@
     height: 300px;
     border-radius: 5px;
 }
+.card-vote {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 15px;
+  padding: 3px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+.card-vote__text-HI {
+  background-color: rgb(30, 180, 0);
+
+}
+.card-vote__text-medium {
+  background-color: rgb(219, 69, 0);
+}
+
+.card-vote__text-low {
+  background-color: rgb(196, 1, 1);
+}
+
+.card-vote__text-null {
+  background-color: rgb(136, 136, 136);
+}
