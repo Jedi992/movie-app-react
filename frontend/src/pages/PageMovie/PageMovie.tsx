@@ -5,13 +5,13 @@ import './PageMovie.scss'
 import KinoboxPlayer from '../../components/KinoboxPlayer/KinoboxPlayer'
 
 export function PageMovie({API_KEY}) {
-  const [movieCard, setMovieCard] = useState({})
-  const {movieId} = useParams()
+  // const [movieCard, setMovieCard] = useState({})
+  // const {movieId} = useParams()
   
   
-  useEffect(() => {
-    movieLoader()
-  }, [movieId])
+  // useEffect(() => {
+  //   movieLoader()
+  // }, [movieId])
 
   return (
     <div className='container'>
@@ -28,7 +28,7 @@ export function PageMovie({API_KEY}) {
           </div>
         </div>
           <div className="movie__player">
-        <KinoboxPlayer kpId={movieId} />
+        {/* <KinoboxPlayer kpId={movieId} /> */}
       </div>
       </div>
       

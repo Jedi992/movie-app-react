@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchShows } from "../../redux/slice/filmSlice"
 import "./SwiperMovie.scss"
@@ -8,34 +8,16 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {getDayMovie } from "../../utils/date"
 
 export default function swiperMovie({discover,movie, pageNum }) {
   const movieList = useSelector((state) => state.film)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchShows({params: discover,typeFilm: "discover",pageNum } ))
+    
   },[])
-  const getDayMovie = (movie) => {
-const days = [
-  "янв.",
-  "фев.",
-  "март.",
-  "апр.",
-  "май.",
-  "июн.",
-  "июл.",
-  "авг.",
-  "сен.",
-  "окт.",
-  "нояб.",
-  "дек."
-];
-const d = new Date(movie);
-const n = d.getMonth() ;
- return d.getDate() + " " + days[n] + " " + d.getFullYear() + " г.";
-
-  }
-  
+ 
   return (
   <>
    <Swiper
@@ -51,9 +33,9 @@ const n = d.getMonth() ;
         <SwiperSlide key={i}  className="swiper-slide">
           <div className="slider-block">
             <div>
-              <p className={"card-vote " + (slide.vote_average > 7
+              <p className={"card-vote " + (slide.vote_average > 6.9
     ? "card-vote__text-HI"
-    : slide.vote_average > 3
+    : slide.vote_average > 2.9
     ? "card-vote__text-medium"
     : slide.vote_average > 0
     ? "card-vote__text-low"

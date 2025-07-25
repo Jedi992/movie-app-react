@@ -1,26 +1,60 @@
-import React, { useEffect,useState } from 'react'
-
-import { ButtonGroup, IconButton, Pagination } from "@chakra-ui/react"
+import { useEffect,useState } from 'react'
+import qs from 'qs'
+import { ButtonGroup, IconButton, Pagination, useBreakpointValue } from "@chakra-ui/react"
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu"
 import "./PopularMoviePage.scss"
 import CardCinema from '../../components/CardCinema/CardCinema'
-import { fetchShows } from '../../redux/slice/filmSlice'
-import { useDispatch } from 'react-redux'
-function PopularMoviePage() {
- const [page, setPage] = useState(1)
- console.log(page)
- const dispatch = useDispatch()
+import { fetchShows,setCurrentPage,setSaveParams } from '../../redux/slice/filmSlice'
+import { useNavigate, useParams } from 'react-router'
+import { useAppDispatch } from "../../hook/useAppDispatch"
+import { useSelector } from 'react-redux'
 
+function PopularMoviePage() {
+ const currentPage = useSelector((state) => state.film.currentPage)
+ const dispatch = useAppDispatch()
+ const navigate = useNavigate()
+ 
   useEffect(() => {
-    dispatch(fetchShows({ params: 'movie', typeFilm: 'discover', pageNum: page }))
-  }, [page])
+      
+      const params = qs.parse(window.location.search.substring(1))
+      const pageNum = params.page ? Number(params.page) : 1
+      const queryString = qs.stringify({
+        page: pageNum
+      })
+      dispatch(setSaveParams(
+        pageNum
+      ))
+      
+    
+     dispatch(fetchShows({ 
+      params: 'movie',
+      typeFilm: 'discover',
+      pageNum: pageNum
+     }));
+     
+     navigate(`?${queryString}`)
+  },[])
+  
+const onChangePage = (page: number) => {
+  const queryString = qs.stringify({
+        page: page
+      })
+  dispatch(setCurrentPage(page))
+  dispatch(fetchShows({ 
+      params: 'movie',
+      typeFilm: 'discover',
+      pageNum: page 
+     }));
+      navigate(`?${queryString}`)
+ }
+ 
   return (
      <div className="container">
             <div className="main__wrapper">
               <h2 className="moviepopular-title">Популярные фильмы</h2>
               <CardCinema mediaType="movie" />
             <div className="pagination__block">
- <Pagination.Root count={500} pageSize={1} defaultPage={1} page={page} onPageChange={(e) => setPage(e.page)} >
+ <Pagination.Root count={500} pageSize={1} defaultPage={1} page={currentPage} onPageChange={(e: any) => onChangePage(e.page) } >
       <ButtonGroup variant="ghost" size="lg">
         <Pagination.PrevTrigger asChild>
           <IconButton>

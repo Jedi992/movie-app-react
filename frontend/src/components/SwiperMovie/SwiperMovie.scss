@@ -4,20 +4,11 @@
     margin-bottom: 40px;
 }
 
-.swiper-slide {
-    
-    border-radius: 0.5rem;    
-    padding: 1.5rem;        
-    display: flex;            
-    align-items: center;      
-    justify-content: center;  
-    padding: 0;
-}
 
 
 
 .slider-block {
-    
+    height: 400px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -36,6 +27,7 @@
 }
 .slide-year {
     color: #9f9f9f;
+    margin-top: 20px;
 }
 
 .slider-img {

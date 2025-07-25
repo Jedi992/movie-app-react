@@ -1,40 +1,19 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { getDayMovie } from '../../utils/date'
 import "./CardCinema.scss"
 
-function CardCinema({mediaType}) {
+function CardCinema({mediaType} : {mediaType: string}) {
 
+  const film = useSelector((state: any) => state.film)
 
-  const film = useSelector((state) => state.film)
-   const tv = mediaType === "tv" ? film?.tvshows.results : null
-  const movie = mediaType === "movie" ? film?.film.results : null 
-  console.log(film)
-  const getDayMovie = (movie) => {
-const days = [
-  "янв.",
-  "фев.",
-  "март.",
-  "апр.",
-  "май.",
-  "июн.",
-  "июл.",
-  "авг.",
-  "сен.",
-  "окт.",
-  "нояб.",
-  "дек."
-];
-const d = new Date(movie);
-const n = d.getMonth() ;
- return d.getDate() + " " + days[n] + " " + d.getFullYear() + " г.";
- 
-  }
-  console.log(tv)
+   const tv = mediaType === "tv" && film.statusTvShows === "success"
+   const movie = mediaType === "movie" && film?.statusFilm === "success"
+  const results = mediaType === "movie" ? film.film?.results : mediaType === "tv" ? film.tvshows?.results : []
   return (
     <div>
       <div className="card-cinema__grid">
-        {(film.statusTvShows || film.statusFilm) === "success" && (movie || tv).map((elem) => (
+        {(tv || movie) ? results.map((elem: any) => (
           <div className="card-cinema" key={elem.id}>
             <div className="card-block__image">
               <p className={"card-vote " + (elem.vote_average > 7
@@ -50,7 +29,6 @@ const n = d.getMonth() ;
               className="card-cinema__poster"
             />
             </div>
-            
             <div className="card-cinema__info">
               <h2 className="card-cinema__title">{elem.title || elem.name}</h2>
               <p className="card-cinema__date">{getDayMovie(elem.release_date || elem.first_air_date)}</p>
@@ -58,7 +36,8 @@ const n = d.getMonth() ;
               </div>
             </div>
           </div>
-        ))}
+        )) : "Загрузка..."
+        }
       </div>
     </div>
   )

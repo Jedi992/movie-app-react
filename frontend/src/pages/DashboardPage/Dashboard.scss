@@ -325,5 +325,8 @@
     font-size: 18px;
     color: #5493ff;
     cursor: pointer;
-    text-decoration: underline;
+  }
+  .movie__title-block {
+    display: flex;
+    flex-direction: row;
   }

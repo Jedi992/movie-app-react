@@ -19,9 +19,10 @@ export const fetchShows = createAsyncThunk(
 interface InitialState {
   film: null;
   tvshows: null;
-  status: "idle" | "loading" | "success" | "Error",
-  statusFilm:"idle" | "loading" | "success" | "Error",
-  statusTvShows: "idle" | "loading" | "success" | "Error",
+  status: "idle" | "loading" | "success" | "error",
+  statusFilm:"idle" | "loading" | "success" | "error",
+  statusTvShows: "idle" | "loading" | "success" | "error",
+  currentPage: number
 }
 
 const initialState: InitialState = {
@@ -29,36 +30,45 @@ const initialState: InitialState = {
   tvshows: null,
   status: "idle",
   statusFilm: "idle",
-  statusTvShows: "idle"
+  statusTvShows: "idle",
+  currentPage: 1,
 }
 
 export const filmSlice = createSlice({
   name: 'film',
   initialState,
   reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload
+    },
+    setSaveParams(state, action) {
+      state.currentPage = action.payload
+      
+    },
   },
   extraReducers: (builder) => builder
   .addCase(fetchShows.pending, (state, action) => {
-    state.status = 'Loading'
+    state.status = 'loading'
   })
   .addCase(fetchShows.fulfilled, (state, action) => {
     const { data, type} = action.payload
     if(type === "movie") {
       state.film = data
       state.statusFilm = "success"
+      
     } else {
       state.tvshows = data
       state.statusTvShows = "success"
     } 
-    if(state.film && state.tvshows != null) {
+    if(state.film && state.tvshows !== null) {
       state.status = 'success'
     }
   })
   .addCase(fetchShows.rejected, (state, action) => {
-    state.status = 'Error';
+    state.status = 'error';
   })
 })
 
-export const { } = filmSlice.actions
+export const { setCurrentPage, setSaveParams } = filmSlice.actions
 
 export default filmSlice.reducer
