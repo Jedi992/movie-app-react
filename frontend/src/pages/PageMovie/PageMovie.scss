@@ -1,45 +1,122 @@
-.moviecard__description {
-    color: #fff;    
-}
+.main__wrapper {
+    margin-top: 140px;
+  }
 
-.movie__block {
+.moviepage__block {
     display: flex;
-}
-.movie__img-block {
-    margin-right: 30px;
-    margin-bottom: 30px;
+    gap: 40px;
 }
 
-.movie__title {
-    color: #fff;
-    font-size: 30px;
+.moviepage__image-block {
+    width: 256px;
+    height: 384px;
+    
 }
 
-.movie__genre {
-    color: #fff;  
+.moviepage__image {
+    width: 100%;
+    border-radius: 5px;
 }
 
-.movie__year {
-    color: #fff; 
+.moviepage__title {
+    font-size: 40px;
+    font-weight: 800;
 }
 
-.movie__genre {
-    color: #fff; 
+.moviepage-stats {
+  display: flex;
+  gap: 100px;
+  font-size: 20px;
+  font-weight: 500;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
-.movie__raiting{
-    color: #fff; 
+.moviepage__stats-block.stats {
+  @media (max-width: 768px) {
+    display: none; 
+  }
+}
+@media (max-width: 768px) {
+  .moviepage__stats-block + .moviepage__stats-block p {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding: 8px 0;
+  }
+
+  .moviepage__stats-block + .moviepage__stats-block p::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: white;
+  }
+
+  .statsCard {
+    color: #aaa;
+  }
 }
 
-.movie__title-block {
-    line-height: 30px;
+.moviepage__stats-block {
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
 }
 
-.movie__img {
-    width: 400px;
-    height: 400px;
+
+.moviepage__stats-title {
+    margin-top: 60px;
 }
 
-.moviecard__title {
-    font-weight: 700;
+.stats {
+    margin-bottom: 20px;
+}
+
+.statsCard {
+    color: #d9d9d9;
+}
+
+.moviepage__overview {
+    font-weight: 500;
+    color: #d9d9d9;
+    max-width: 850px;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+.moviepage__profile {
+    margin-top: 20px;
+    font-size: 20px;
+     color: #9f9f9f;
+     font-weight: 600;
+}
+
+.moviepage__button {
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s linear;
+    background: #0b63f6;
+    padding: 15px;
+}
+
+@media (max-width: 512px) {
+ .moviepage__block {
+    display: flex;
+    flex-direction: column;
+ }
+ .moviepage__title-block {
+    margin-top: 30px;
+ }
 }

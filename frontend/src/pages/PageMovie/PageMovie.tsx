@@ -1,37 +1,91 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import axios from 'axios'
-import './PageMovie.scss'
-import KinoboxPlayer from '../../components/KinoboxPlayer/KinoboxPlayer'
-
-export function PageMovie({API_KEY}) {
-  // const [movieCard, setMovieCard] = useState({})
-  // const {movieId} = useParams()
-  
-  
-  // useEffect(() => {
-  //   movieLoader()
-  // }, [movieId])
-
+import React, { useEffect } from 'react';
+import './PageMovie.scss';
+import { useSelector } from 'react-redux'
+import { fetchCollection } from '../../redux/slice/tmdbIdSlice';
+import { useParams } from 'react-router';
+import { useAppDispatch } from '../../hook/useAppDispatch';
+import { UseSelector } from 'react-redux';
+function PageMovie() {
+  const card = useSelector((state) => state.tmdbId.movieTvPerson)
+  const loading = useSelector((state) => state.tmdbId.status)
+  const {id,mediaType} = useParams()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(fetchCollection({type: mediaType,id: id}))
+  },[mediaType, id])
+  console.log(card)
   return (
-    <div className='container'>
-       <div className='main__wrapper'>
-        <div className='movie__block'>
-          <div className='movie__img-block'><img className='movie__img' src={movieCard.coverUrl || movieCard.posterUrl} alt="#" /></div>
-          <div className='movie__title-block'>
-            <h2 className='movie__title'>{movieCard.nameRu}</h2>
-            <p className='movie__year'>Год производства: {movieCard.year}</p>
-            <p className='movie__genre'>Жанры: {movieCard.genres?.map(elem => elem.genre).join(',')}</p>
-            <p className='movie__raiting'>Рейтинг кинопоиска: {movieCard.ratingKinopoisk}</p>
-          <div className='moviecard__description'><h6 className='moviecard__title'>Описание</h6> {movieCard.description}</div>
-
-          </div>
+    <div className="container main__wrapper">
+      {
+        loading === "success" ? 
+         <div className="moviepage__block">
+        <div className="moviepage__image-block">
+          <img className="moviepage__image" src={`https://image.tmdb.org/t/p/w500${card.poster_path || card.profile_path }`} alt="" />
+          <button className="moviepage__button">Добавить в список</button>
         </div>
-          <div className="movie__player">
-        {/* <KinoboxPlayer kpId={movieId} /> */}
-      </div>
-      </div>
+        <div className="moviepage__title-block">
+          <h3 className="moviepage__title">{card.title || card.name}</h3>
+          {card.profile_path && <p className="moviepage__profile">Актёр</p>} 
+         {mediaType === "movie" ? <div className="moviepage-stats">
+          <div className="moviepage__stats-block stats">
+            <p className="moviepage__stats-title stats">Название</p>
+            <p className="moviepage__stats-release stats">Дата выхода</p>
+            <p className="moviepage__stats-runtime stats">Длительность</p>
+            <p className="moviepage__stats-vote stats">Оценка</p>
+            <p className="moviepage__stats-budget stats">Бюджет</p>
+          </div>
+           <div className="moviepage__stats-block">
+            <p className="moviepage__stats-title stats statsCard">{card.title}</p>
+            <p className="moviepage__stats-release stats statsCard">{card.release_date}</p>
+            <p className="moviepage__stats-runtime stats statsCard">{card.runtime}</p>
+            <p className="moviepage__stats-vote stats statsCard">{card.vote_average}</p>
+            <p className="moviepage__stats-budget stats statsCard">{card.budget}</p>
+           </div>
+         </div> : mediaType === "tv" ?
+         <div className="moviepage-stats">
+          <div className="moviepage__stats-block stats">
+            <p className="moviepage__stats-title stats">Название</p>
+            <p className="moviepage__stats-release stats">Дата выхода</p>
+            <p className="moviepage__stats-lastRelease stats">Дата последнего эпизода</p>
+            <p className="moviepage__stats-vote stats">Оценка</p>
+            <p className="moviepage__stats-seasons stats">Количество сезонов</p>
+            <p className="moviepage__stats-series stats">Количество серий</p>
+          </div>
+           <div className="moviepage__stats-block">
+            <p className="moviepage__stats-title stats statsCard">{card.name}</p>
+            <p className="moviepage__stats-release stats statsCard">{card.first_air_date}</p>
+             <p className="moviepage__stats-lastRelease stats statsCard">{card.last_air_date}</p>
+             <p className="moviepage__stats-vote stats statsCard">{card.vote_average}</p>
+            <p className="moviepage__stats-seasons stats statsCard">{card.number_of_seasons}</p>
+            <p className="moviepage__stats-series stats statsCard">{card.number_of_episodes}</p>
+            <p className="moviepage__stats-runtime stats statsCard">{card.runtime}</p>
+           </div>
+         </div> : <div className="moviepage-stats">
+          <div className="moviepage__stats-block stats">
+            <p className="moviepage__stats-title stats">Дата рождения</p>
+            <p className="moviepage__stats-release stats">Место рождения</p>
+            <p className="moviepage__stats-lastRelease stats">Пол</p>
+          </div>
+           <div className="moviepage__stats-block">
+            <p className="moviepage__stats-title stats statsCard">{card.birthday || "Неизвестно"}</p>
+            <p className="moviepage__stats-release stats statsCard">{card.place_of_birth || "Неизвестно"}</p>
+            <p className="moviepage__stats-runtime stats statsCard">{card.gender === 1 ? "Женский" : card.gender === 2 ? "Мужской" : "Неизвестно"}</p> 
+           </div>
+         </div>}
+         <div className="moviepage__overview">
+          <p>{card.overview || card.biography}</p>
+          
+        </div>
+        </div>
+        
+      </div> 
       
+        : 
+        "Загрузка..." 
+      }
+     
     </div>
-  )
-}
+  );
+};
+
+export default PageMovie;

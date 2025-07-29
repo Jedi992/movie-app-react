@@ -47,7 +47,7 @@ const onChangePage = (page: number) => {
      }));
       navigate(`?${queryString}`)
  }
- 
+  
   return (
      <div className="container">
             <div className="main__wrapper">

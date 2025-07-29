@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import "./Search.scss"
 import { useAppDispatch } from '../../hook/useAppDispatch';
 import { useSelector, UseSelector } from 'react-redux';
+import { Link } from 'react-router'
 import { fetchSearch } from "../../redux/slice/searchSlice"
 import { FaCircle } from "react-icons/fa6";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import debounce from "lodash.debounce"
 import {getDayMovie} from "../../utils/date"
+import {fetchCollection} from "../../redux/slice/tmdbIdSlice"
 export function Search() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [searchKeywords, setSearchKeywords] = useState<string>("")
@@ -15,7 +17,6 @@ export function Search() {
   const dispatch = useAppDispatch()
   
   const search = useSelector((state) => state.search)
-  
   
   
 
@@ -37,11 +38,13 @@ export function Search() {
       setIsOpen(false)
     }
   }, [keywords])
-
+const handleOnFocus = () => {
+        setIsOpen(true);
+    };
   const searchDebounce = useCallback(
   debounce((str: string) => {
    setKeywords(str) 
-  }, 700),[]
+  }, 500),[]
   )
   const onChangeInput = (e) => {
     setSearchKeywords(e.target.value);
@@ -57,13 +60,14 @@ export function Search() {
         <input
           className="header__search-input"
           onChange={(e) => onChangeInput(e)}
+          onFocus={handleOnFocus}
           value={searchKeywords}
           placeholder="Поиск..."
         />
       </form>
       {isOpen && search.status === "success" && <ul className="search-dropdown">
-        {search.resultsSearch.results.map((elem, i) => (<li key={i} className="search-dropdown__item">
-          <div className="search__titleImage-block">
+        {search.resultsSearch.results.map((elem, i) => (<Link to={`/details/${elem.media_type}/${elem.id}`}><li key={i} className="search-dropdown__item">
+        <div className="search__titleImage-block">
             <div className="search__image-block">
               <img className="search-img" src={`https://image.tmdb.org/t/p/w500${elem.poster_path || elem.profile_path}`} alt="" />
             </div>
@@ -80,7 +84,7 @@ export function Search() {
                 {
                   elem.media_type === "person" ? null : <>
                   <FaCircle size={5} />
-                <p>{getDayMovie(elem.release_date || elem.first_air_date)}</p>
+                <p>{ elem.release_date || elem.first_air_date ? getDayMovie(elem.release_date || elem.first_air_date) : "Неизвестно"}</p>
                   </>
                 }
                 
@@ -97,7 +101,7 @@ export function Search() {
                   ? "card-vote__text-low"
                   : "card-vote__text-null")}>{elem.vote_average.toFixed(1)}</p>
           </div>}
-        </li>))}
+       </li></Link> ))}
       </ul>}
     </div>
   )

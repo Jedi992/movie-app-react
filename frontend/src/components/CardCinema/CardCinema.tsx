@@ -2,20 +2,33 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getDayMovie } from '../../utils/date'
 import "./CardCinema.scss"
+import { Link } from "react-router"
+import { setCollection, fetchCollection } from "../../redux/slice/tmdbIdSlice"
+import { useAppDispatch } from '../../hook/useAppDispatch'
 
 function CardCinema({mediaType} : {mediaType: string}) {
-
+  const dispatch = useAppDispatch()
   const film = useSelector((state: any) => state.film)
-
+  const tmdId = useSelector((state: any) => state.tmdbId)
    const tv = mediaType === "tv" && film.statusTvShows === "success"
    const movie = mediaType === "movie" && film?.statusFilm === "success"
   const results = mediaType === "movie" ? film.film?.results : mediaType === "tv" ? film.tvshows?.results : []
+  // console.log(tmdId)
+  const handleClick = (element) => {
+     dispatch(fetchCollection({
+      name: element.name,
+      title: element.title,
+      first_air_date: element.first_air_date,
+      id: element.id
+    }))
+  }
   return (
     <div>
       <div className="card-cinema__grid">
         {(tv || movie) ? results.map((elem: any) => (
-          <div className="card-cinema" key={elem.id}>
-            <div className="card-block__image">
+          <Link to={`/details/${mediaType}/${elem.id}`}>
+          <div onClick={() => handleClick(elem)} className="card-cinema" key={elem.id}>
+          <div className="card-block__image">
               <p className={"card-vote " + (elem.vote_average > 7
     ? "card-vote__text-HI"
     : elem.vote_average > 3
@@ -31,11 +44,14 @@ function CardCinema({mediaType} : {mediaType: string}) {
             </div>
             <div className="card-cinema__info">
               <h2 className="card-cinema__title">{elem.title || elem.name}</h2>
+              
               <p className="card-cinema__date">{getDayMovie(elem.release_date || elem.first_air_date)}</p>
               <div className="card-cinema__rating">
               </div>
             </div>
+            
           </div>
+          </Link>
         )) : "Загрузка..."
         }
       </div>

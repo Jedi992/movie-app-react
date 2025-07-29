@@ -27,8 +27,8 @@ function PopularTvPage() {
        ))
 
       dispatch(fetchShows({ 
-       params: 'tv',
-       typeFilm: 'discover',
+       params: "tv",
+       typeFilm: "discover",
        pageNum: pageNum
       }));
       
@@ -41,8 +41,8 @@ function PopularTvPage() {
        })
    dispatch(setCurrentPage(page))
    dispatch(fetchShows({ 
-       params: 'tv',
-       typeFilm: 'discover',
+       params: "tv",
+       typeFilm: "discover",
        pageNum: page 
       }));
        navigate(`?${queryString}`)

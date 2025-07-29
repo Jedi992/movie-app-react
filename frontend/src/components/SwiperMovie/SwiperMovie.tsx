@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchShows } from "../../redux/slice/filmSlice"
+import { fetchCollection } from "../../redux/slice/tmdbIdSlice"
 import "./SwiperMovie.scss"
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -15,10 +16,9 @@ export default function swiperMovie({discover,movie, pageNum }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchShows({params: discover,typeFilm: "discover",pageNum } ))
-    
   },[])
- 
-  return (
+
+  return (  
   <>
    <Swiper
       modules={[Navigation, Pagination]}
@@ -31,7 +31,8 @@ export default function swiperMovie({discover,movie, pageNum }) {
     >
       {movieList.status === "success" ? movie.results.map((slide, i) => (
         <SwiperSlide key={i}  className="swiper-slide">
-          <div className="slider-block">
+          <Link to={`/details/${discover}/${slide.id}`}>
+          <div onClick={() => handleClick(slide)} className="slider-block">
             <div>
               <p className={"card-vote " + (slide.vote_average > 6.9
     ? "card-vote__text-HI"
@@ -43,8 +44,9 @@ export default function swiperMovie({discover,movie, pageNum }) {
               <img className="slider-img" src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`} alt="" />
             </div>
               <div className='slide-title'>{slide.title || slide.name}</div>
-              <div  className='slide-year'>{getDayMovie(slide.release_date || slide.first_air_date)}</div>
+              <div  className='slide-year'>{slide.release_date || slide.first_air_date ? getDayMovie(slide.release_date || slide.first_air_date) : "Неизвестно"}</div>
           </div>
+          </Link>
         </SwiperSlide>
       )) : "Загрузка..."}
     </Swiper>
