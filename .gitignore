@@ -1,6 +1,6 @@
 # Игнорим только этот .env
 /backend/.env
-
+/frontend/.env
 # Игнорим node_modules в проектах
 /frontend/node_modules/
 /backend/node_modules/
