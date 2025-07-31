@@ -1,0 +1,16 @@
+{
+    "semi": true,
+    "singleQuote": false,
+    "jsxSingleQuote": false,
+    "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "options": {
+        "singleQuote": false,   
+        "jsxSingleQuote": false   
+      }
+    }
+  ],
+    "bracketSpacing": true,
+    "trailingComma": "all"
+}
