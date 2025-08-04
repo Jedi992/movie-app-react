@@ -34,10 +34,7 @@ export default function swiperMovie({ discover, movie, pageNum }) {
           ? movie.results.map((slide, i) => (
               <SwiperSlide key={i} className="swiper-slide">
                 <Link to={`/details/${discover}/${slide.id}`}>
-                  <div
-                    onClick={() => handleClick(slide)}
-                    className="slider-block"
-                  >
+                  <div className="slider-block">
                     <div>
                       <p
                         className={
@@ -51,7 +48,7 @@ export default function swiperMovie({ discover, movie, pageNum }) {
                                 : "card-vote__text-null")
                         }
                       >
-                        {slide.vote_average.toFixed(1)}
+                        {Number(slide.vote_average.toFixed(1))}
                       </p>
                       <img
                         className="slider-img"

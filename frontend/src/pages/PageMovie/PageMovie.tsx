@@ -5,6 +5,7 @@ import { fetchCollection } from "../../redux/slice/tmdbIdSlice";
 import { useParams } from "react-router";
 import { useAppDispatch } from "../../hook/useAppDispatch";
 import { UseSelector } from "react-redux";
+import { getDayMovie } from "../../utils/date";
 function PageMovie() {
   const card = useSelector((state) => state.tmdbId.movieTvPerson);
   const loading = useSelector((state) => state.tmdbId.status);
@@ -13,7 +14,75 @@ function PageMovie() {
   useEffect(() => {
     dispatch(fetchCollection({ type: mediaType, id: id }));
   }, [mediaType, id]);
-  console.log(loading);
+  if (card.genres) {
+  }
+  const getGenre = (genre) => {
+    if (genre) {
+      let finalArr = genre.map((elem) => elem.name);
+      return finalArr.join(", ");
+    }
+  };
+  const getVoteStyled = (vote) => {
+    if (vote !== undefined && vote !== null) {
+      vote = Number(vote.toFixed(1));
+    }
+    return (
+      <span
+        className={
+          "card-votes " +
+          (vote > 6.9
+            ? "card-vote__text-HI"
+            : vote > 2.9
+              ? "card-vote__text-medium"
+              : vote > 0
+                ? "card-vote__text-low"
+                : "card-vote__text-null")
+        }
+      >
+        {vote}
+      </span>
+    );
+  };
+
+  let rows;
+  if (mediaType === "movie") {
+    rows = [
+      { label: "Название", value: card.title },
+      { label: "Оценка", value: getVoteStyled(card.vote_average) },
+      { label: "Жанр", value: getGenre(card.genres) },
+      { label: "Дата выхода", value: getDayMovie(card.release_date) },
+      { label: "Длительность", value: `${card.runtime} мин` },
+      {
+        label: "Бюджет",
+        value: card.budget === 0 ? "Неизвестно" : `${card.budget}$`,
+      },
+    ];
+  } else if (mediaType === "tv") {
+    rows = [
+      { label: "Название", value: card.name },
+      { label: "Оценка", value: getVoteStyled(card.vote_average) },
+      { label: "Дата выхода", value: getDayMovie(card.first_air_date) },
+      { label: "Последний эпизод", value: getDayMovie(card.last_air_date) },
+      { label: "Сезонов", value: card.number_of_seasons },
+      { label: "Эпизодов", value: card.number_of_episodes },
+    ];
+  } else {
+    rows = [
+      { label: "Имя", value: card.name },
+      { label: "Дата рождения", value: card.birthday || "Неизвестно" },
+      { label: "Место рождения", value: card.place_of_birth || "Неизвестно" },
+      {
+        label: "Пол",
+        value:
+          card.gender === 1
+            ? "Женский"
+            : card.gender === 2
+              ? "Мужской"
+              : "Неизвестно",
+      },
+    ];
+  }
+
   return (
     <div className="container main__wrapper">
       {loading === "success" ? (
@@ -29,101 +98,20 @@ function PageMovie() {
           <div className="moviepage__title-block">
             <h3 className="moviepage__title">{card.title || card.name}</h3>
             {card.profile_path && <p className="moviepage__profile">Актёр</p>}
-            {mediaType === "movie" ? (
-              <div className="moviepage-stats">
-                <div className="moviepage__stats-block stats">
-                  <p className="moviepage__stats-title stats">Название</p>
-                  <p className="moviepage__stats-release stats">Дата выхода</p>
-                  <p className="moviepage__stats-runtime stats">Длительность</p>
-                  <p className="moviepage__stats-vote stats">Оценка</p>
-                  <p className="moviepage__stats-budget stats">Бюджет</p>
-                </div>
-                <div className="moviepage__stats-block">
-                  <p className="moviepage__stats-title stats statsCard">
-                    {card.title}
-                  </p>
-                  <p className="moviepage__stats-release stats statsCard">
-                    {card.release_date}
-                  </p>
-                  <p className="moviepage__stats-runtime stats statsCard">
-                    {card.runtime} мин
-                  </p>
-                  <p className="moviepage__stats-vote stats statsCard">
-                    {card.vote_average}
-                  </p>
-                  <p className="moviepage__stats-budget stats statsCard">
-                    {card.budget}
-                  </p>
-                </div>
+            <div className="moviepage__content">
+              <table className="stats-table">
+                <tbody className="bodytable">
+                  {rows.map(({ label, value }, idx) => (
+                    <tr key={idx} className="stats-table__row">
+                      <td className="stats-table__label">{label}</td>
+                      <td className="stats-table__value">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="moviepage__overview">
+                <p>{card.overview || card.biography}</p>
               </div>
-            ) : mediaType === "tv" ? (
-              <div className="moviepage-stats">
-                <div className="moviepage__stats-block stats">
-                  <p className="moviepage__stats-title stats">Название</p>
-                  <p className="moviepage__stats-release stats">Дата выхода</p>
-                  <p className="moviepage__stats-lastRelease stats">
-                    Дата последнего эпизода
-                  </p>
-                  <p className="moviepage__stats-vote stats">Оценка</p>
-                  <p className="moviepage__stats-seasons stats">
-                    Количество сезонов
-                  </p>
-                  <p className="moviepage__stats-series stats">
-                    Количество серий
-                  </p>
-                </div>
-                <div className="moviepage__stats-block">
-                  <p className="moviepage__stats-title stats statsCard">
-                    {card.name}
-                  </p>
-                  <p className="moviepage__stats-release stats statsCard">
-                    {card.first_air_date}
-                  </p>
-                  <p className="moviepage__stats-lastRelease stats statsCard">
-                    {card.last_air_date}
-                  </p>
-                  <p className="moviepage__stats-vote stats statsCard">
-                    {card.vote_average}
-                  </p>
-                  <p className="moviepage__stats-seasons stats statsCard">
-                    {card.number_of_seasons}
-                  </p>
-                  <p className="moviepage__stats-series stats statsCard">
-                    {card.number_of_episodes}
-                  </p>
-                  <p className="moviepage__stats-runtime stats statsCard">
-                    {card.runtime}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="moviepage-stats">
-                <div className="moviepage__stats-block stats">
-                  <p className="moviepage__stats-title stats">Дата рождения</p>
-                  <p className="moviepage__stats-release stats">
-                    Место рождения
-                  </p>
-                  <p className="moviepage__stats-lastRelease stats">Пол</p>
-                </div>
-                <div className="moviepage__stats-block">
-                  <p className="moviepage__stats-title stats statsCard">
-                    {card.birthday || "Неизвестно"}
-                  </p>
-                  <p className="moviepage__stats-release stats statsCard">
-                    {card.place_of_birth || "Неизвестно"}
-                  </p>
-                  <p className="moviepage__stats-runtime stats statsCard">
-                    {card.gender === 1
-                      ? "Женский"
-                      : card.gender === 2
-                        ? "Мужской"
-                        : "Неизвестно"}
-                  </p>
-                </div>
-              </div>
-            )}
-            <div className="moviepage__overview">
-              <p>{card.overview || card.biography}</p>
             </div>
           </div>
         </div>

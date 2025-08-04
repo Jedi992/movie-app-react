@@ -12,7 +12,6 @@ export const fetchCollection = createAsyncThunk(
     } else if (name) {
       discover = "person";
     }
-    console.log(type, discover);
     if (discover === "tv" || "movie" || "person") {
       const tv = await axios.get(
         `https://api.themoviedb.org/3/${discover || type}/${id}?language=ru-RU`,
