@@ -1,122 +1,108 @@
 .main__wrapper {
-    margin-top: 140px;
-  }
+  margin-top: 140px;
+}
 
 .moviepage__block {
-    display: flex;
-    gap: 40px;
+  display: flex;
+  gap: 40px;
+
+  @media (max-width: 512px) {
+    flex-direction: column;
+  }
 }
 
 .moviepage__image-block {
-    width: 256px;
-    height: 384px;
-    
+  width: 256px;
+  height: 384px;
 }
 
 .moviepage__image {
-    width: 100%;
-    border-radius: 5px;
+  width: 100%;
+  border-radius: 5px;
 }
 
 .moviepage__title {
-    font-size: 40px;
-    font-weight: 800;
+  font-size: 40px;
+  font-weight: 800;
 }
 
-.moviepage-stats {
-  display: flex;
-  gap: 100px;
+.moviepage__profile {
+  margin-top: 20px;
   font-size: 20px;
-  font-weight: 500;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
-
-.moviepage__stats-block.stats {
-  @media (max-width: 768px) {
-    display: none; 
-  }
-}
-@media (max-width: 768px) {
-  .moviepage__stats-block + .moviepage__stats-block p {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #333;
-    padding: 8px 0;
-  }
-
-  .moviepage__stats-block + .moviepage__stats-block p::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: white;
-  }
-
-  .statsCard {
-    color: #aaa;
-  }
-}
-
-.moviepage__stats-block {
-  display: flex;
-  flex-direction: column;
-
-  @media (max-width: 768px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px 20px;
-  }
-}
-
-
-.moviepage__stats-title {
-    margin-top: 60px;
-}
-
-.stats {
-    margin-bottom: 20px;
-}
-
-.statsCard {
-    color: #d9d9d9;
+  color: #9f9f9f;
+  font-weight: 600;
 }
 
 .moviepage__overview {
-    font-weight: 500;
-    color: #d9d9d9;
-    max-width: 850px;
-  word-break: normal;
+  font-weight: 500;
+  color: #d9d9d9;
+  max-width: 850px;
   overflow-wrap: break-word;
   line-height: 1.5;
 }
 
-.moviepage__profile {
-    margin-top: 20px;
-    font-size: 20px;
-     color: #9f9f9f;
-     font-weight: 600;
-}
-
-.moviepage__button {
-    margin-top: 15px;
-    width: 100%;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s linear;
-    background: #0b63f6;
-    padding: 15px;
-}
-
-@media (max-width: 512px) {
- .moviepage__block {
-    display: flex;
-    flex-direction: column;
- }
- .moviepage__title-block {
+.moviepage__title-block {
+  @media (max-width: 512px) {
     margin-top: 30px;
- }
+  }
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  color: #d9d9d9;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+}
+
+.card-votes  {
+color: #ffff;
+  padding: 3px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.moviepage__content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+
+.stats-table__label {
+  padding: 12px 8px;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+  width: 25%;
+
+  @media (max-width: 512px) {
+    display: block;
+    width: 100%;
+    background: #1a1a1a;
+  }
+}
+
+.genres {
+
+}
+
+
+.stats-table__value {
+  padding: 12px 150px;
+  color: #aaa;
+  text-align: left;
+
+  @media (max-width: 512px) {
+    display: block;
+    padding-left: 16px;
+    border-bottom: 1px solid #222;
+  }
 }

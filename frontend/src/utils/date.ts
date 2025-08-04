@@ -4,7 +4,7 @@ export function getDayMovie(dateMovie) {
     "фев.",
     "март.",
     "апр.",
-    "май.",
+    "мая.",
     "июн.",
     "июл.",
     "авг.",
