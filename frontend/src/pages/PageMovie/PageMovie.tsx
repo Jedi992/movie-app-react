@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./PageMovie.scss";
 import { useSelector } from "react-redux";
 import { fetchCollection } from "../../redux/slice/tmdbIdSlice";
 import { useParams } from "react-router";
 import { useAppDispatch } from "../../hook/useAppDispatch";
-import { UseSelector } from "react-redux";
 import { getDayMovie } from "../../utils/date";
 function PageMovie() {
   const card = useSelector((state) => state.tmdbId.movieTvPerson);

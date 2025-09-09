@@ -5,6 +5,8 @@ import { Link } from "react-router";
 import { useSelector } from "react-redux";
 
 export function Dashboard() {
+  const film = useSelector((state: any) => state.film.film);
+  const tvshows = useSelector((state: any) => state.film.tvshows);
   return (
     <main>
       <div className="container">
@@ -27,7 +29,7 @@ export function Dashboard() {
               <SwiperMovie
                 discover="movie"
                 pageNum={1}
-                movie={useSelector((state) => state.film.film)}
+                movie={film}
               />
             </div>
             <div>
@@ -43,7 +45,7 @@ export function Dashboard() {
               <SwiperMovie
                 discover="tv"
                 pageNum={1}
-                movie={useSelector((state) => state.film.tvshows)}
+                movie={tvshows}
               />
             </div>
           </article>

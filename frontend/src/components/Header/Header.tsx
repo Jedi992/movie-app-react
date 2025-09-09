@@ -18,9 +18,9 @@ export function Header() {
           <nav className="header__nav">
             <ul className="header__menu">
               <li className="header__menu-item">
-                {/* <NavLink to={"/auth/"}>
+                <NavLink to={"/auth/"}>
                   <button className="header__menu-link popup-btn">Войти</button>
-                </NavLink> */}
+                </NavLink>
               </li>
             </ul>
           </nav>
