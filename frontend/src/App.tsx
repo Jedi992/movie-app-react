@@ -7,7 +7,7 @@ import { Dashboard } from "./pages/DashboardPage/Dashboard";
 import PopularTvPage from "./pages/PopularTvPage/PopularTvPage";
 import PageMovie from "./pages/PageMovie/PageMovie";
 import PopularMoviePage from "./pages/PopularMoviePage/PopularMoviePage";
-import LoginPage from "./pages/LoginPage/LoginPage"
+import LoginPage from "./pages/LoginPage/LoginPage";
 export function App() {
   return (
     <>
@@ -15,7 +15,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/popular/tvshows" element={<PopularTvPage />} />
-        <Route path="/auth/" element={<LoginPage/>} />
+        <Route path="/auth/" element={<LoginPage />} />
         <Route path="/popular/movie" element={<PopularMoviePage />} />
         <Route path="/popular/tv" element={<PopularTvPage />} />
         <Route path="/details/:mediaType/:id" element={<PageMovie />} />

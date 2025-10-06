@@ -26,11 +26,7 @@ export function Dashboard() {
                   <HiChevronRight className="arrow" color="#5493ff" size={20} />
                 </div>
               </div>
-              <SwiperMovie
-                discover="movie"
-                pageNum={1}
-                movie={film}
-              />
+              <SwiperMovie discover="movie" pageNum={1} movie={film} />
             </div>
             <div>
               <div className="movie__block-title">
@@ -42,11 +38,7 @@ export function Dashboard() {
                   <HiChevronRight className="arrow" color="#5493ff" size={20} />
                 </div>
               </div>
-              <SwiperMovie
-                discover="tv"
-                pageNum={1}
-                movie={tvshows}
-              />
+              <SwiperMovie discover="tv" pageNum={1} movie={tvshows} />
             </div>
           </article>
         </div>

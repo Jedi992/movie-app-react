@@ -1,8 +1,8 @@
 {
   "name": "movieapp-react",
   "version": "1.0.0",
-  "main": "server.js",
-  "type": "commonjs",
+  "main": "server.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --legacy-watch"
@@ -23,5 +23,10 @@
     "mongoose": "^8.17.1",
     "nodemon": "^3.1.10",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
