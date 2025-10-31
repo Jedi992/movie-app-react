@@ -5,7 +5,7 @@ import { IUser } from "../../models/IUser";
 const initialState = {};
 
 export const authSlice = createSlice({
-  name: "film",
+  name: "auth",
   initialState,
   reducers: {},
 });

@@ -6,17 +6,26 @@ export default class AuthService {
     email: string,
     password: string,
   ): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>("/login", { email, password });
+    const response = await $api.post<AuthResponse>("/login", { email, password });
+    if(response.data.accessToken)
+    localStorage.setItem("token", response.data.accessToken);
+  return response
   }
 
   static async registration(
     email: string,
+    username: string,
     password: string,
   ): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>("/registration", { email, password });
+    const response = await $api.post<AuthResponse>("/registration", { email,username,password });
+    if(response.data.accessToken)
+    localStorage.setItem("token", response.data.accessToken);
+  return response
   }
 
   static async logout(): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>("/logout");
+    const response = $api.post<AuthResponse>("/logout");
+    localStorage.removeItem("token")
+    return response
   }
 }

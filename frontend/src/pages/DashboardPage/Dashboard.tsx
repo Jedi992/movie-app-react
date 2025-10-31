@@ -20,7 +20,6 @@ export function Dashboard() {
                 <h4 className="movie__list-title">Популярные фильмы</h4>
                 <div className="movie__title-block">
                   <h4 className="movie__list-text">
-                    {" "}
                     <Link to="/popular/movie"> Показать всё </Link>
                   </h4>
                   <HiChevronRight className="arrow" color="#5493ff" size={20} />

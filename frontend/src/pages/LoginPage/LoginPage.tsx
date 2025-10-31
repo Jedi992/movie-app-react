@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./LoginPage.scss";
+import AuthService from "../../services/AuthService";
+import { Link } from "react-router";
 
 function LoginPage() {
   const [email, setEmail] = useState<string>("");
@@ -22,8 +24,8 @@ function LoginPage() {
         />
       </div>
       <div>
-        <button className="loginForm__button">Войти</button>
-        <button className="loginForm__button">Регистрация</button>
+        <button className="loginForm__button" onClick={() => AuthService.login(email, password)}>Войти</button>
+        <Link to="/register" className="loginForm__button">Регистрация</Link>
       </div>
     </div>
   );
