@@ -1,7 +1,6 @@
 import React from 'react'
 import "./RegisterPage.scss"
 import {useState} from "react"
-import AuthService from '../../services/AuthService';
 function RegisterPage() {
      const [email, setEmail] = useState<string>("");
      const [username, setUsername] = useState<string>("");
@@ -30,7 +29,7 @@ function RegisterPage() {
         />
       </div>
       <div>
-        <button className="loginForm__button" onClick={() => AuthService.registration(email,username,password)}>Регистрация</button>
+        <button className="loginForm__button">Регистрация</button>
       </div>
     </div>
   )

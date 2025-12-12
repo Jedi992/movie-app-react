@@ -1,16 +1,30 @@
 import React, { useState } from "react";
 import "./LoginPage.scss";
-import AuthService from "../../services/AuthService";
 import { Link } from "react-router";
+import { login } from "../../app/api/authApi"
 
 function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const token = null
+  const handleLogin = async(e) => {
+    e.preventDefault();
+    try {
+      const data = await login(email, password);
 
+      localStorage.setItem("key", data.accessToken);
+      console.log(data)
+      
+    }catch(err) {
+      console.log(err)
+    }
+  }
+  
   return (
     <div className="main__wrapper container">
       <div>
         <p className="loginForm__text">Почта</p>
+        <form onSubmit={handleLogin}>
         <input
           type="text"
           onChange={(e) => setEmail(e.target.value)}
@@ -22,10 +36,13 @@ function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
+        <div>
+          <button className="loginForm__button" type="submit">Войти</button>
+          <Link to="/register" className="loginForm__button">Регистрация</Link>
+        </div>
+        </form>
       </div>
       <div>
-        <button className="loginForm__button" onClick={() => AuthService.login(email, password)}>Войти</button>
-        <Link to="/register" className="loginForm__button">Регистрация</Link>
       </div>
     </div>
   );
