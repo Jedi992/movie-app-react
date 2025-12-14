@@ -46,21 +46,38 @@ const logout = async(req: Request,res:Response ): Promise<void> => {
     res.json(tokenData)
 }
 
-const profile = async(req: Request,res:Response,next: NextFunction ): Promise<void> => {
-    try {
-         const {refreshToken} = req.cookies as {refreshToken: string}
-        const profile = await userService.profile(refreshToken)
-    res.json(profile)
-    } catch (error) {
-        next(error)
-    }
-    
-}
+const profile = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user.id;
+    const profileData = await userService.getProfileById(userId);
+    return res.json(profileData);
+  } catch (e) {
+    next(e);
+  }
+};
 
+const refresh = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    const refreshToken = (req.cookies as any)?.refreshToken;
+    
+    const userData = await userService.refresh(refreshToken);
+
+    res.cookie("refreshToken", userData.refreshToken, {
+      maxAge: 38*24*60*1000,
+      httpOnly: true,
+    });
+
+    return res.json(userData);
+  } catch (e) {
+    next(e);
+  }
+};
 
 export default {
     registration,
     login,
     logout,
+    refresh,
     profile
 }

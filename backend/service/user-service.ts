@@ -50,22 +50,50 @@ const login = async(email: string, password: string) => {
     return {...token,  user: {email}, }
 }
 
+export const refresh = async (refreshToken: string) => {
+    console.log(refreshToken)
+    
+  if (!refreshToken) throw ApiError.Unauthorized();
+
+  const userData: any = tokenService.validateTokenRefresh(refreshToken);
+  
+  const tokenFromDb = await tokenService.findToken(refreshToken);
+
+  if (!userData || !tokenFromDb) throw ApiError.Unauthorized();
+
+  const user = await userModel.findById(userData.id);
+  if (!user) throw ApiError.Unauthorized();
+
+  const tokens = tokenService.tokenGenerate({ id: user._id, email: user.email });
+
+  await tokenService.saveToken(user.id, tokens.refreshToken);
+
+  return {
+    ...tokens,
+    user: {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    },
+  };
+};
+
 export const logout = async(refreshToken: string) => {
     const token = await tokenService.removeToken(refreshToken)
     return token
 }
 
-export const profile = async(token) => {
-    const decoded = tokenService.decodedToken(token)
-    const id = decoded.id
-    const profile = await userModel.findOne({_id: id})
-    console.log(profile)
-    return profile
-}
+export const getProfileById = async (id: string) => {
+  const profile = await userModel.findById(id);
+  return profile;
+};
+
+
 
 export default {
   registration,
   login,
   logout,
-  profile
+  refresh,
+  getProfileById
 };

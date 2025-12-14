@@ -12,10 +12,13 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if(!token) { 
         return next(ApiError.Unauthorized())
     } 
-    const userData = tokenService.validateToken(token)
+    
+    const userData = tokenService.validateTokenAccess(token)
+    console.log(userData)
     if(!userData) { 
         return next(ApiError.Unauthorized())
     }
+    req.user = userData;
     next()
     } catch(error) {
         next(error)
