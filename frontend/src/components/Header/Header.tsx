@@ -1,25 +1,19 @@
 import "./Header.scss";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Search } from "../Search/Search";
-import { profile } from "../../app/api/authApi"
+import { logout, profile } from "../../app/api/authApi"
 import { useEffect, useState } from "react";
-export function Header() {
-    const token = localStorage.getItem("key")
-    
-    const [profileStats, setProfileStats] = useState(null)
-    const getProfile = async() => {
-            const data = await profile()
-            console.log(data)
-            setProfileStats(data)
-            
-        }
-        useEffect(() => {
-          if(token) {
-            getProfile()
-          }
-            
-            
-        },[])
+export function Header({isAuth, setIsAuth}) {
+    const handleLogout = async() => {
+      try {
+        await logout()
+      setIsAuth(false)
+      } catch (error) {
+        console.log(error)
+      }
+      
+    }
+          
   return (
     <header>
       <div className="container">
@@ -35,9 +29,13 @@ export function Header() {
           <nav className="header__nav">
             <ul className="header__menu">
               <li className="header__menu-item">
-                {token && profileStats ? <NavLink to={`/profile/${profileStats._id}`}>
-                  <button className="header__menu-link popup-btn">профиль</button>
-                </NavLink>  : <NavLink to="/auth/login">
+                {isAuth ? 
+                <>
+                <Link to={`/profile`} className="header__menu-link popup-btn">профиль</Link>
+                  <button onClick={() => handleLogout()} className="header__menu-link popup-btn">выход</button>
+                </>
+                  
+                 : <NavLink to="/auth/login">
                   <button className="header__menu-link popup-btn">Войти</button>
                 </NavLink>  }
               </li>

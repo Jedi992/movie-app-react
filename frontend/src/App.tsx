@@ -12,9 +12,11 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 
 export function App() {
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("key"));
+  console.log()
   return (
     <>
-      <Header />
+      <Header isAuth={isAuth} setIsAuth={setIsAuth} />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/popular/tvshows" element={<PopularTvPage />} />
@@ -22,8 +24,8 @@ export function App() {
         <Route path="/popular/movie" element={<PopularMoviePage />} />
         <Route path="/popular/tv" element={<PopularTvPage />} />
         <Route path="/details/:mediaType/:id" element={<PageMovie />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
+        <Route path="/auth/login" element={<LoginPage setIsAuth={setIsAuth} />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

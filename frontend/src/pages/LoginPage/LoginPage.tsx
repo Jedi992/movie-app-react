@@ -3,18 +3,16 @@ import "./LoginPage.scss";
 import { Link } from "react-router";
 import { login } from "../../app/api/authApi"
 
-function LoginPage() {
+function LoginPage({ setIsAuth }) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const token = null
   const handleLogin = async(e) => {
     e.preventDefault();
     try {
       const data = await login(email, password);
 
       localStorage.setItem("key", data.accessToken);
-      console.log(data)
-      
+      setIsAuth(true)
     }catch(err) {
       console.log(err)
     }

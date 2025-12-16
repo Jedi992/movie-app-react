@@ -8,3 +8,8 @@ export async function profile() {
     const res = await $api.get("/profile");
     return res.data
 }
+
+export async function logout() {
+    const res = await $api.post("/logout");
+    return res.data
+}
